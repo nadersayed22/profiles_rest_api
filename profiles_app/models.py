@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractBaseUser , PermissionsMixin
 class UserProfileManager(BaseUserManager):
     ''' manager for user profile'''
     
+    
     def create_user(self, email, name, password=None):
         '''create a new user profile '''
         
@@ -25,7 +26,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password):
         '''create anew super user '''
         
-        user = create_user(email, name, password)
+        user = self.create_user(email, name, password)
         
         user.is_superuser = True
         user.is_staff = True
@@ -39,7 +40,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     '''create user for system '''
     
     email = models.EmailField(max_length=50, unique=True)
-    username = models.CharField(max_length= 255)
+    name = models.CharField(max_length= 255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     
